@@ -36,98 +36,98 @@ export default {
       categoryId: 2
     },
     {
-      id: 4,
-      title: 'Introduction to Ruby',
-      content: 'How to write clean Ruby code',
-      authorId: 3,
-      categoryId: 3
-    },
-    {
-      id: 4,
-      title: 'Introduction to Ruby',
-      content: 'How to write clean Ruby code',
-      authorId: 3,
-      categoryId: 3
-    },
-    {
-      id: 4,
-      title: 'Introduction to Ruby',
-      content: 'How to write clean Ruby code',
-      authorId: 3,
-      categoryId: 3
-    },
-    {
-      id: 4,
-      title: 'Introduction to Ruby',
-      content: 'How to write clean Ruby code',
-      authorId: 3,
-      categoryId: 3
-    },
-    {
-      id: 4,
-      title: 'Introduction to Ruby',
-      content: 'How to write clean Ruby code',
-      authorId: 3,
-      categoryId: 3
-    },
-    {
-      id: 4,
-      title: 'Introduction to Ruby',
-      content: 'How to write clean Ruby code',
-      authorId: 3,
-      categoryId: 3
-    },
-    {
       id: 5,
       title: 'Introduction to Ruby',
       content: 'How to write clean Ruby code',
-      authorId: 1,
-      categoryId: 2
+      authorId: 3,
+      categoryId: 3
     },
     {
       id: 6,
       title: 'Introduction to Ruby',
       content: 'How to write clean Ruby code',
-      authorId: 1,
-      categoryId: 2
+      authorId: 3,
+      categoryId: 3
     },
     {
       id: 7,
       title: 'Introduction to Ruby',
       content: 'How to write clean Ruby code',
-      authorId: 2,
+      authorId: 3,
       categoryId: 3
     },
     {
       id: 8,
       title: 'Introduction to Ruby',
       content: 'How to write clean Ruby code',
+      authorId: 3,
+      categoryId: 3
+    },
+    {
+      id: 9,
+      title: 'Introduction to Ruby',
+      content: 'How to write clean Ruby code',
+      authorId: 3,
+      categoryId: 3
+    },
+    {
+      id: 10,
+      title: 'Introduction to Ruby',
+      content: 'How to write clean Ruby code',
+      authorId: 3,
+      categoryId: 3
+    },
+    {
+      id: 11,
+      title: 'Introduction to Ruby',
+      content: 'How to write clean Ruby code',
+      authorId: 1,
+      categoryId: 2
+    },
+    {
+      id: 12,
+      title: 'Introduction to Ruby',
+      content: 'How to write clean Ruby code',
+      authorId: 1,
+      categoryId: 2
+    },
+    {
+      id: 13,
+      title: 'Introduction to Ruby',
+      content: 'How to write clean Ruby code',
+      authorId: 2,
+      categoryId: 3
+    },
+    {
+      id: 14,
+      title: 'Introduction to Ruby',
+      content: 'How to write clean Ruby code',
       authorId: 2,
       categoryId: 1
     },
     {
-      id: 9,
+      id: 15,
       title: 'Introduction to Javascript',
       content: 'How to write clean Javascript code',
       authorId: 1,
       categoryId: 1
     },
     {
-      id: 10,
+      id: 16,
       title: 'Introduction to Python',
       content: 'How to write clean Python code',
       authorId: 2,
       categoryId: 1
     },
     {
-      id: 11,
+      id: 17,
       title: 'Introduction to Elixir',
       content: 'Some content',
       authorId: 1,
       categoryId: 2
     },
     {
-      id: 12,
+      id: 18,
       title: 'Introduction to Ruby',
       content: 'How to write clean Ruby code',
       authorId: 3,

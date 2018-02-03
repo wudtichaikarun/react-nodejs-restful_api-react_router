@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
-import { Home, Categories } from './'
+import { Home, Categories, Articles } from './'
 import { Sidebar } from '../containers'
 
 const Content = () => (
@@ -9,17 +9,10 @@ const Content = () => (
     <Sidebar />
     <div className='col-7'>
       <Route exact path='/' component={Home} />
-      <Route path='/categories/*' component={Categories} />
+      <Route path='/categories' component={Categories} />
+      <Route path='/articles' component={Articles} />
     </div>
   </div> 
 )
-
-Content.propTypes = {
-
-}
-
-Content.defaultProps = {
-
-}
 
 export default Content

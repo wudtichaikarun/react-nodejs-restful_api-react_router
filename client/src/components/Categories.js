@@ -5,7 +5,7 @@ import { Articles } from '../containers'
 
 const Categories = () => (
   <div>
-    <Route 
+    <Route
       path='/categories/:categoryId/articles'
       component={Articles} />
   </div>

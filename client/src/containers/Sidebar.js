@@ -21,7 +21,8 @@ class SidebarContainer extends Component {
               <NavLink
                 key={id} 
                 to={`/categories/${id}/articles`} 
-                className='list-group-item'>
+                className='list-group-item'
+                activeClassName='active'>
                   {title}
               </NavLink> 
            )
