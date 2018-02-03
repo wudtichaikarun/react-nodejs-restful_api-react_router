@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { Home } from './'
+import { Content } from './'
 
 const App = () => (
   <div className="container">
-    <Route path='/' component={Home} />
+    <Route component={Content} />
   </div>
 )
 

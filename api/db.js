@@ -1,5 +1,5 @@
 export default {
-  categoryId:[
+  categories:[
     {
       id: 1,
       title: 'Languages'
