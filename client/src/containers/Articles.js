@@ -6,8 +6,20 @@ class ArticlesContainer extends Component {
     articles: []
   }
 
+  // Lifecycle method
   componentDidMount() {
     this.loadArticles()
+  }
+
+  // Lifecycle method
+  componentDidUpdate(prevProps) {
+    const { match } = this.props
+    // : use for change name match to prevMatch
+    const { match: prevMatch } = prevProps
+
+    if( match.params.categoryId !== prevMatch.params.categoryId ) {
+      this.loadArticles()
+    }
   }
 
   loadArticles() {
