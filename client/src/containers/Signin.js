@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { Auth } from '../lib'
 import { AuthForm } from '../components'
 
 class SigninContainer extends Component {
   handleFormSubmit = credential => {
-    fetch('/sessions',{
+    fetch('/sessions', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -11,6 +12,8 @@ class SigninContainer extends Component {
       },
       body: JSON.stringify(credential)
     })
+      .then(({headers}) => Auth.setToken(headers))
+      .then(() => this.props.history.goBack())
   }
   render() {
     return(

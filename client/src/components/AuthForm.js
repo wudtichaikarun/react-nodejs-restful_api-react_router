@@ -37,6 +37,7 @@ class AuthForm extends Component {
             type='email'
             className='form-control'
             id='email'
+            name='email'
             placeholder='Enter email'
             onChange={this.onFieldChange} />
         </div>

@@ -1,8 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { Auth } from '../lib'
 
-const Header = () => (
-  <nav className='navbar navbar-toggleable-md navbar-light bg-faded md-3'>
+const logout = (push) => {
+  return () => {
+    Auth.removeToken()
+    push('/')
+  }  
+}
+
+const Header = ({ history: { push }}) => {
+  const links = Auth.getToken() ? (
+    <ul className='navbar-nav ml-auto'>
+      <li className='nav-item'>
+        <a href='#' className='nav-link' onClick={logout(push)}>Logout</a>
+      </li>
+    </ul>
+  ) : (
     <ul className='navbar-nav ml-auto'>
       <li className='nav-item'>
         <Link to='/sign-in' className='nav-link'>Login</Link>
@@ -11,7 +25,13 @@ const Header = () => (
         <Link to='/sign-up' className='nav-link'>Register</Link>
       </li>
     </ul>
-  </nav>
-)
+  )
 
-export default Header
+  return (
+    <nav className='navbar navbar-toggleable-md navbar-light bg-faded md-3'>
+      { links }
+    </nav> 
+  )
+}
+
+export default withRouter(Header)
