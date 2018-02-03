@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 class SidebarContainer extends Component {
   state = {
@@ -18,11 +18,12 @@ class SidebarContainer extends Component {
        <nav className='list-group'>
          {
            this.state.categories.map(({ id, title }) => 
-              <Link
+              <NavLink
                 key={id} 
-                to={`/categories/${id}/articles`} >
+                to={`/categories/${id}/articles`} 
+                className='list-group-item'>
                   {title}
-              </Link> 
+              </NavLink> 
            )
          }
        </nav>
