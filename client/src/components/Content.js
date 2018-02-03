@@ -8,7 +8,7 @@ const Content = () => (
   <div className='row'>
     <Sidebar />
     <div className='col-7'>
-      <Route path='/' component={Home} />
+      <Route exact path='/' component={Home} />
       <Route path='/categories/*' component={Categories} />
     </div>
   </div> 
