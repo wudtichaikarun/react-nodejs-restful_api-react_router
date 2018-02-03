@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { Auth } from '../lib'
 
@@ -32,6 +33,12 @@ const Header = ({ history: { push }}) => {
       { links }
     </nav> 
   )
+}
+
+Header.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default withRouter(Header)

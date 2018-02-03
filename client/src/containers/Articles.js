@@ -1,8 +1,22 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { numericString } from 'airbnb-prop-types'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 
 class ArticlesContainer extends Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        categoryId: numericString().isRequired
+      }).isRequired
+    }).isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string.isRequired
+    }).isRequired
+
+  }
+
   state = {
     articles: [],
     pagination: {}
