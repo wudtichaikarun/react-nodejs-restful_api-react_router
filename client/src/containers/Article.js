@@ -18,6 +18,10 @@ class ArticleContainer extends Component {
       .then(({ article }) => this.setState({ ...article }))
   }
 
+  backToPreviousUrl = () => {
+    this.props.history.goBack()
+  }
+
   render() {
     const { title, content } = this.state
     
@@ -25,6 +29,11 @@ class ArticleContainer extends Component {
       <div>
         <h2>{title}</h2>
         <p>{content}</p>
+        <button
+          className='btn btn-sm btn-primary'
+          onClick={this.backToPreviousUrl}>
+            Back
+        </button>
       </div>
     )
   }
