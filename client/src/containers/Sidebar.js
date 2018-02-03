@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-class SidebarComponent extends Component {
+class SidebarContainer extends Component {
   state = {
     categories: []
   }
@@ -13,16 +14,21 @@ class SidebarComponent extends Component {
 
   render() {
     return (
-     <div>
-       <ul>
+     <div className='col-5'>
+       <nav className='list-group'>
          {
            this.state.categories.map(({ id, title }) => 
-            <li key={id}>{title}</li> )
+              <Link
+                key={id} 
+                to={`/categories/${id}/articles`} >
+                  {title}
+              </Link> 
+           )
          }
-       </ul>
+       </nav>
      </div> 
     )
   }
 }
 
-export default SidebarComponent
+export default SidebarContainer
