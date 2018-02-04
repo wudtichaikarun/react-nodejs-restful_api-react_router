@@ -18,7 +18,7 @@ const ArticlesController = {
     if(ArticlesPolicy.for('create', req.user)) {
       const article = Articles.create(req.body)
 
-      res.status(201).json(article)
+      res.status(201).json({article})
     } else {
       res
         .status(401)

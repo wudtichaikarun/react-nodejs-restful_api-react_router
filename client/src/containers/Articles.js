@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
+import Auth from '../lib/Auth';
 
 class ArticlesContainer extends Component {
   static propTypes = {
@@ -63,6 +64,15 @@ class ArticlesContainer extends Component {
 
     return(
       <div>
+        {
+          Auth.getToken() && (
+            <Link 
+              to={`/categories/${categoryId}/articles/new`}
+              className='btn btn-sm btn-secondary'>
+                Create Article
+            </Link>
+          )
+        }
         <ul className='nav flex-column'>
           {
             articles.map(({id, title}) => 
