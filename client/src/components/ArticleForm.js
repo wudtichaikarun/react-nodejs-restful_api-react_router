@@ -55,7 +55,8 @@ class ArticleForm extends Component {
         </div>
         <div className='form-group'>
           <label htmlFor='content'>Content</label>
-          <input
+          <textarea
+            rows='4'
             type='text'
             className='form-control'
             id='content'
