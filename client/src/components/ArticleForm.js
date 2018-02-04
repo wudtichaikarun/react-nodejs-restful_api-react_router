@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Prompt } from 'react-router-dom' 
 
 class ArticleForm extends Component {
 
   state = {
     title: '',
-    content: ''
+    content: '',
+    isDirty: false
   }
 
   static propType = {
@@ -31,15 +33,18 @@ class ArticleForm extends Component {
   onFieldChange = event => {
     const { name, value } = event.target
 
-    this.setState({ [name]: value })
+    this.setState({ [name]: value, isDirty: true })
   }
 
   render() {
     const { formType } = this.props
-    const { title, content } = this.state
+    const { title, content, isDirty } = this.state
 
     return(
       <form>
+        <Prompt
+          when={isDirty} 
+          message='Are you sure you want to leav this page' />
         <h2 className='text-center'>{formType} Article Form</h2>
         <hr />
         <div className='form-group'>
