@@ -1,85 +1,97 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Prompt } from 'react-router-dom' 
+import {
+  setPropTypes,
+  withState,
+  withHandlers,
+  lifecycle,
+  compose
+} from 'recompose'
 
-class ArticleForm extends Component {
+const ArticleForm = ({
+  isDirty,
+  formType,
+  onFieldChange,
+  formValues: { title, content },
+  onSubmit
+}) => (
+  <form>
+    <Prompt
+      when={isDirty} 
+      message='Are you sure you want to leav this page' />
+    <h2 className='text-center'>{formType} Article Form</h2>
+    <hr />
+    <div className='form-group'>
+      <label htmlFor='title'>Title</label>
+      <input
+        type='text'
+        className='form-control'
+        id='title'
+        name='title'
+        placeholder='Enter title'
+        value={title}
+        onChange={onFieldChange} />
+    </div>
+    <div className='form-group'>
+      <label htmlFor='content'>Content</label>
+      <textarea
+        rows='4'
+        type='text'
+        className='form-control'
+        id='content'
+        name='content'
+        placeholder='Enter content'
+        value={content}
+        onChange={onFieldChange} />
+    </div>
+    <button
+      type='submit'
+      className='btn btn-primary'
+      onClick={onSubmit}>
+        {formType}
+    </button>
+  </form>
+)
 
-  state = {
-    title: '',
-    content: '',
-    isDirty: false
-  }
-
-  static propType = {
+export default compose(
+  setPropTypes({
     formType: PropTypes.string.isRequired,
     title: PropTypes.string,
     content: PropTypes.string,
     onSubmit: PropTypes.func.isRequired
-  }
+  }),
 
-  componentDidUpdate(prevProps) {
-    const { title, content } = this.props
+  withState('formValues', 'setFormValues', { title: '', content: ''}),
+  withState('isDirty', 'setDirty', false),
 
-    if(prevProps.title === title && prevProps.content === content) return
-    this.setState({ title, content })
-  }
+  withHandlers({
+    onSubmit: ({ 
+      onSubmit, 
+      formValues, 
+      setDirty 
+    }) => event => {
+      event.preventDefault()
+      
+      setDirty(false)
+      onSubmit(formValues)
+    },
 
-  onSubmit = event => {
-    event.preventDefault()
+    onFieldChange: ({ 
+      isDirty, setFormValues, formValues, setDirty 
+    }) => ({ target: { name, value } }) => {
+      setFormValues({ ...formValues, [name]: value })
+      setDirty(true)
+    }
+  }),
 
-    this.props.onSubmit(this.state)
-  }
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      const { title, content, setFormValues } = this.props
+  
+      if(prevProps.title === title && prevProps.content === content) return
+      setFormValues({ title, content })
+    }
+  })
 
-  onFieldChange = event => {
-    const { name, value } = event.target
-
-    this.setState({ [name]: value, isDirty: true })
-  }
-
-  render() {
-    const { formType } = this.props
-    const { title, content, isDirty } = this.state
-
-    return(
-      <form>
-        <Prompt
-          when={isDirty} 
-          message='Are you sure you want to leav this page' />
-        <h2 className='text-center'>{formType} Article Form</h2>
-        <hr />
-        <div className='form-group'>
-          <label htmlFor='title'>Title</label>
-          <input
-            type='text'
-            className='form-control'
-            id='title'
-            name='title'
-            placeholder='Enter title'
-            value={title}
-            onChange={this.onFieldChange} />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='content'>Content</label>
-          <textarea
-            rows='4'
-            type='text'
-            className='form-control'
-            id='content'
-            name='content'
-            placeholder='Enter content'
-            value={content}
-            onChange={this.onFieldChange} />
-        </div>
-        <button
-          type='submit'
-          className='btn btn-primary'
-          onClick={this.onSubmit}>
-            {formType}
-        </button>
-      </form>
-    )
-  }
-
-}
-
-export default ArticleForm
+)(ArticleForm)

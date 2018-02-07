@@ -65,6 +65,7 @@ const ArticlesContainer = ({
 )
 
 export default compose(
+  // PropTypes
   setPropTypes({
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -76,11 +77,14 @@ export default compose(
     }).isRequired
   }),
 
+  // State
   withState('articles', 'setArticles', []),
   withState('pagination', 'setPagination', {}),
 
+  // Props valiable
   withProps(props => ({ categoryId: props.match.params.categoryId })),
 
+  // Handlers Method
   withHandlers({
     loadArticles: ({
       setArticles,
@@ -99,7 +103,8 @@ export default compose(
           })
       } 
   }),
-
+  
+  // Lifecycle
   lifecycle({
     componentDidMount() {
       this.props.loadArticles()
