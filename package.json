@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "recompose": "^0.26.0"
   },
   "proxy": "http://localhost:8080"
 }

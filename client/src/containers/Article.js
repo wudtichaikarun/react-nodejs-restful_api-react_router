@@ -2,7 +2,52 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { Auth } from '../lib'
-import Link from 'react-router-dom/Link';
+import { 
+  withState,
+  withHandlers,
+  compose 
+} from 'recompose'
+import Link from 'react-router-dom/Link'
+
+const ArticleContainer = ({
+
+}) => (
+  <div>
+    <h2>{title}</h2>
+    <p>{content}</p>
+    <div className='btn-group'>
+      <button
+        className='btn btn-sm btn-primary'
+        onClick={this.backToPreviousUrl}>
+          Back
+      </button>
+      {
+        Auth.getToken() && (
+          <Link
+            to={`/articles/${id}/edit`}
+            className='btn btn-sm btn-secondary'>
+              Edit
+          </Link>
+        )
+      }
+    </div>
+  </div>
+  )
+
+export default compose(
+  withState('article', 'setArticle', { title: '', content: ''}),
+  withHandlers({
+    loadArticle: ({ match: { params: id }, setArticle }) => _ => {
+      fetch(`/articles/${id}`)
+        .then(res => res.json())
+        .then(({ article }) => setArticle(article))
+    },
+
+    backToPreviousUrl: ({ histo : { goBack }}) => _ => {
+      goBack()
+    }
+  })
+)(ArticleContainer)
 
 class ArticleContainer extends Component {
   static propTypes = {
@@ -42,26 +87,7 @@ class ArticleContainer extends Component {
     const { title, content } = this.state
     
     return( 
-      <div>
-        <h2>{title}</h2>
-        <p>{content}</p>
-        <div className='btn-group'>
-          <button
-            className='btn btn-sm btn-primary'
-            onClick={this.backToPreviousUrl}>
-              Back
-          </button>
-          {
-            Auth.getToken() && (
-              <Link
-                to={`/articles/${id}/edit`}
-                className='btn btn-sm btn-secondary'>
-                  Edit
-              </Link>
-            )
-          }
-        </div>
-      </div>
+
     )
   }
 }
