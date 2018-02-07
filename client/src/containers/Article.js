@@ -5,12 +5,15 @@ import { Auth } from '../lib'
 import { 
   withState,
   withHandlers,
+  lifecycle,
   compose 
 } from 'recompose'
 import Link from 'react-router-dom/Link'
 
 const ArticleContainer = ({
-
+  match: { params: id },
+  article: { title, content },
+  backToPreviousUrl
 }) => (
   <div>
     <h2>{title}</h2>
@@ -18,7 +21,7 @@ const ArticleContainer = ({
     <div className='btn-group'>
       <button
         className='btn btn-sm btn-primary'
-        onClick={this.backToPreviousUrl}>
+        onClick={backToPreviousUrl}>
           Back
       </button>
       {
@@ -45,6 +48,11 @@ export default compose(
 
     backToPreviousUrl: ({ histo : { goBack }}) => _ => {
       goBack()
+    }
+  }),
+  lifecycle({
+    componentDidMount() {
+      this.props.loadArticle()
     }
   })
 )(ArticleContainer)
