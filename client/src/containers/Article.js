@@ -5,13 +5,14 @@ import { Auth } from '../lib'
 import { 
   withState,
   withHandlers,
+  withProps,
   lifecycle,
   compose 
 } from 'recompose'
 import Link from 'react-router-dom/Link'
 
 const ArticleContainer = ({
-  match: { params: id },
+  id,
   article: { title, content },
   backToPreviousUrl
 }) => (
@@ -35,12 +36,16 @@ const ArticleContainer = ({
       }
     </div>
   </div>
-  )
+)
 
 export default compose(
+
   withState('article', 'setArticle', { title: '', content: ''}),
+
+  withProps(props => ({ id: props.match.params.id })),
+
   withHandlers({
-    loadArticle: ({ match: { params: id }, setArticle }) => _ => {
+    loadArticle: ({ id, setArticle }) => _ => {
       fetch(`/articles/${id}`)
         .then(res => res.json())
         .then(({ article }) => setArticle(article))
@@ -50,11 +55,13 @@ export default compose(
       goBack()
     }
   }),
+
   lifecycle({
     componentDidMount() {
       this.props.loadArticle()
     }
   })
+
 )(ArticleContainer)
 
 class ArticleContainer extends Component {
