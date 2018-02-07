@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Proptype from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { Auth } from '../lib'
-import { Article } from '../components'
 import ArticleForm from '../components/ArticleForm';
 
 class NewArticleContainer extends Component {
