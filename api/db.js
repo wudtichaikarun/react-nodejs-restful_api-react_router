@@ -181,6 +181,7 @@ export default {
       id: 1,
       email: 'romantic_01@gmail.com',
       isAdmin: true,
+      // password 123
       password: '$2a$12$CPXZMzQhC9tp6DyBQoJu/uzzdu.gjwXwJ6Z6rJu1zS0S.El/fR3na'
     },
     {

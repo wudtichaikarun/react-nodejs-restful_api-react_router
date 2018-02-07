@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { Auth } from '../lib'
 import { 
+  setPropTypes,
   withState,
   withHandlers,
   withProps,
@@ -11,6 +12,9 @@ import {
 } from 'recompose'
 import Link from 'react-router-dom/Link'
 
+/*#############################
+Stateless Functional Component
+##############################*/
 const ArticleContainer = ({
   id,
   article: { title, content },
@@ -40,6 +44,17 @@ const ArticleContainer = ({
 
 export default compose(
 
+  setPropTypes({
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: numericString().isRequired
+      }).isRequired
+    }).isRequired,
+    history: PropTypes.shape({
+      goBack: PropTypes.func.isRequired
+    }).isRequired
+  }),
+
   withState('article', 'setArticle', { title: '', content: ''}),
 
   withProps(props => ({ id: props.match.params.id })),
@@ -51,7 +66,7 @@ export default compose(
         .then(({ article }) => setArticle(article))
     },
 
-    backToPreviousUrl: ({ histo : { goBack }}) => _ => {
+    backToPreviousUrl: ({ history : { goBack }}) => _ => {
       goBack()
     }
   }),
@@ -64,47 +79,4 @@ export default compose(
 
 )(ArticleContainer)
 
-class ArticleContainer extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: numericString().isRequired
-      }).isRequired
-    }).isRequired,
-    history: PropTypes.shape({
-      goBack: PropTypes.func.isRequired
-    }).isRequired
-  }
 
-  state = {
-    title: '',
-    content: ''
-  }
-
-  componentDidMount() {
-    this.loadArticle()
-  }
-
-  loadArticle() {
-    const { id } = this.props.match.params
-
-    fetch(`/articles/${id}`)
-      .then(res => res.json())
-      .then(({ article }) => this.setState({ ...article }))
-  }
-
-  backToPreviousUrl = () => {
-    this.props.history.goBack()
-  }
-
-  render() {
-    const { id } = this.props.match.params
-    const { title, content } = this.state
-    
-    return( 
-
-    )
-  }
-}
-
-export default ArticleContainer
