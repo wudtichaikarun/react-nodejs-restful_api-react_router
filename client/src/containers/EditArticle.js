@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
-import { Auth } from '../lib'
+import { withAuth, withAuthCheck } from '../lib'
 import { ArticleForm } from '../components'
 import {
  setPropTypes,
@@ -30,19 +30,24 @@ export default compose(
     }).isRequired
   }),
 
+  withAuth,
+
+  withAuthCheck,
+
   withState('article', 'setArticle', { title: '', content: ''}),
 
   withHandlers({
     editArticle: ({
       history: { push },
-      match: { params: {id} }
+      match: { params: {id} },
+      auth: { getToken }
     }) => article => {
       fetch(`/articles/${id}`,{
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': Auth.getToken()
+          'Authorization': getToken()
         },
         body: JSON.stringify({
           ...article

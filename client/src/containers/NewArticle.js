@@ -6,7 +6,7 @@ import {
   withHandlers,
   compose,
 } from 'recompose'
-import { Auth } from '../lib'
+import { withAuth, withAuthCheck } from '../lib'
 import ArticleForm from '../components/ArticleForm'
 
 const NewArticleContainer = ({
@@ -26,17 +26,22 @@ export default compose(
     }).isRequired
   }),
 
+  withAuth,
+
+  withAuthCheck,
+
   withHandlers({
     createArticle: ({
       match: {params: { categoryId} },
-      history: { push }
+      history: { push },
+      auth: { getToken }
     }) => article => {
       fetch('/articles', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': Auth.getToken()
+          'Authorization': getToken()
         },
         body: JSON.stringify({
           ...article, categoryId
