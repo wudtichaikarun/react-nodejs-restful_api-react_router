@@ -5,11 +5,12 @@ import {
   setPropTypes,
   withHandlers,
   branch,
+  renderComponent,
   compose
 } from 'recompose'
 import { Auth } from '../lib'
 
-const Nav = ({ children }) => (
+const Nav = ({children}) => (
   <nav className='navbar navbar-toggleable-md navbar-light bg-faded md-3'>
     { children }
   </nav> 
@@ -19,7 +20,10 @@ const UserManu = ({logout}) => (
   <Nav>
     <ul className='navbar-nav ml-auto'>
       <li className='nav-item'>
-        <a href='#' className='nav-link' onClick={logout}>Logout</a>
+        <a 
+          href='#' 
+          className='nav-link' 
+          onClick={logout}>Logout</a>
       </li>
     </ul>
   </Nav>
@@ -52,17 +56,15 @@ export default compose(
     logout: ({
       history: { push }
     }) => _ => {
-      return () => {
-        Auth.removeToken()
-        push('/')
-      }
+      Auth.removeToken()
+      push('/')
     }
   }),
 
   branch(
     _ => Auth.getToken(),
-    UserManu,
-    GuestManu 
+    renderComponent(UserManu),
+    renderComponent(GuestManu)
   )
 
 )()
