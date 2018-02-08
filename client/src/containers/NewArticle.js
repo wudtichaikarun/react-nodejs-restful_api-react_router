@@ -1,47 +1,50 @@
 import React, { Component } from 'react'
 import Proptype from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
+import {
+  setPropTypes,
+  withHandlers,
+  compose,
+  withProps
+} from 'recompose'
 import { Auth } from '../lib'
-import ArticleForm from '../components/ArticleForm';
+import ArticleForm from '../components/ArticleForm'
 
-class NewArticleContainer extends Component {
+const NewArticleContainer = ({
+  createArticle
+}) => (
+  <ArticleForm 
+    formType='Create'
+    onSubmit={createArticle} />
+)
 
-  static propTypes = {
+export default compose(
+  withProps({
     match: Proptype.shape({
       params: Proptype.shape({
         categoryId: numericString().isRequired
       }).isRequired
     }).isRequired
-  }
+  }),
 
-  createArticle = article => {
-    //console.log({...article, categoryId:1})
-    
-    fetch('/articles', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': Auth.getToken()
-      },
-      body: JSON.stringify({
-        ...article, categoryId: this.props.match.params.categoryId
+  withHandlers({
+    createArticle: ({
+      match: {params: { categoryId} },
+      history: { push }
+    }) => article => {
+      fetch('/articles', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': Auth.getToken()
+        },
+        body: JSON.stringify({
+          ...article, categoryId
+        })
       })
-    })
-    .then(res => res.json())
-    //.then(json => console.log(json))
-    .then(({article: { id }}) =>
-    this.props.history.push(`/articles/${id}`))
-  }
-
-  render() {
-    return(
-     <ArticleForm 
-      formType='Create'
-      onSubmit={this.createArticle} />
-    )
-  }
-
-}
-
-export default NewArticleContainer
+      .then(res => res.json())
+      .then(({ article: { id } }) => push(`/articles/${id}`)) 
+    } 
+  })
+)(NewArticleContainer)

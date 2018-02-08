@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { Auth } from '../lib'
@@ -8,8 +8,7 @@ import {
  withState,
  withHandlers,
  lifecycle,
- compose, 
- withProps
+ compose
 } from 'recompose'
 
 const EditAtricleContainer = ({
