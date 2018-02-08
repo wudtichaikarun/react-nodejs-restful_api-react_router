@@ -8,7 +8,7 @@ import {
   renderComponent,
   compose
 } from 'recompose'
-import { Auth } from '../lib'
+import { withAuth } from '../lib'
 
 const Nav = ({children}) => (
   <nav className='navbar navbar-toggleable-md navbar-light bg-faded md-3'>
@@ -44,6 +44,8 @@ const GuestManu = () => (
 )
 
 export default compose(
+  withAuth,
+
   withRouter,
 
   setPropTypes({
@@ -54,15 +56,16 @@ export default compose(
 
   withHandlers({
     logout: ({
-      history: { push }
+      history: { push },
+      auth: { removeToken }
     }) => _ => {
-      Auth.removeToken()
+      removeToken()
       push('/')
     }
   }),
 
   branch(
-    _ => Auth.getToken(),
+    ({ auth: { getToken } }) => getToken(),
     renderComponent(UserManu),
     renderComponent(GuestManu)
   )
