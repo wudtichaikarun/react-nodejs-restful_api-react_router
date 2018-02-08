@@ -3,58 +3,71 @@ import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { Auth } from '../lib'
 import { ArticleForm } from '../components'
+import {
+ setPropTypes,
+ withState,
+ withHandlers,
+ lifecycle,
+ compose, 
+ withProps
+} from 'recompose'
 
-class EditAtricleContainer extends Component {
+const EditAtricleContainer = ({
+  article,
+  editArticle
+}) => (
+  <ArticleForm
+    { ...article }
+    formType='Edit'
+    onSubmit={ editArticle } />
+)
 
-  static propTypes = {
+export default compose(
+  setPropTypes({
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: numericString().isRequired
       }).isRequired
     }).isRequired
-  }
+  }),
 
-  state = {
-    title: '',
-    content: ''
-  }
+  withState('article', 'setArticle', { title: '', content: ''}),
 
-  componentDidMount() {
-    this.loadArticle()
-  } 
-
-  editArticle = article => {
-    fetch(`/articles/${this.props.match.params.id}`,{
-      method: 'PATCH',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': Auth.getToken()
-      },
-      body: JSON.stringify({
-        ...article
+  withHandlers({
+    editArticle: ({
+      history: { push },
+      match: { params: {id} }
+    }) => article => {
+      fetch(`/articles/${id}`,{
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': Auth.getToken()
+        },
+        body: JSON.stringify({
+          ...article
+        })
       })
-    })
-    .then(res => res.json())
-    .then(({ article: { id } }) => 
-    this.props.history.push(`/articles/${id}`))
-  }
+      .then(res => res.json())
+      .then(({ article: { id } }) => push(`/articles/${id}`))
+    },
 
-  loadArticle() {
-    fetch(`/articles/${this.props.match.params.id}`)
-    .then(res => res.json())
-    .then(({ article }) => this.setState({ ...article }))
-    //.then(({ article }) => console.log(article))
-  }
+    loadArticle: ({
+      match: { params: {id} },
+      article,
+      setArticle 
+    }) => _ => {
+      fetch(`/articles/${id}`)
+      .then(res => res.json())
+      .then(({ article }) => setArticle(article))
+    }
+  }),
 
-  render() {
-    return(
-      <ArticleForm
-        {...this.state}
-        formType='Edit'
-        onSubmit={this.editArticle} />
-    )
-  }
-}
+  lifecycle({
+    componentDidMount() {
+      this.props.loadArticle()
+    } 
+  })
 
-export default EditAtricleContainer
+)(EditAtricleContainer)
