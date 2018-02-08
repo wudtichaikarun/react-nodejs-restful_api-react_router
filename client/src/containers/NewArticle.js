@@ -5,7 +5,6 @@ import {
   setPropTypes,
   withHandlers,
   compose,
-  withProps
 } from 'recompose'
 import { Auth } from '../lib'
 import ArticleForm from '../components/ArticleForm'
@@ -19,7 +18,7 @@ const NewArticleContainer = ({
 )
 
 export default compose(
-  withProps({
+  setPropTypes({
     match: Proptype.shape({
       params: Proptype.shape({
         categoryId: numericString().isRequired
