@@ -6,9 +6,11 @@ import { ArticleForm } from '../components'
 import {
  setPropTypes,
  withState,
+ withProps,
  flattenProp,
  withHandlers,
  lifecycle,
+ onlyUpdateForKeys,
  compose
 } from 'recompose'
 
@@ -38,18 +40,20 @@ export default compose(
 
   withState('article', 'setArticle', { title: '', content: ''}),
 
+  withProps(props => ({ accessToken: props.auth.getToken() })),
+
   withHandlers({
     editArticle: ({
       history: { push },
       match: { params: {id} },
-      getToken
+      accessToken
     }) => article => {
       fetch(`/articles/${id}`,{
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': getToken()
+          'Authorization': accessToken
         },
         body: JSON.stringify({
           ...article
@@ -74,6 +78,8 @@ export default compose(
     componentDidMount() {
       this.props.loadArticle()
     } 
-  })
+  }),
+
+  onlyUpdateForKeys(['accessToken', 'article'])
 
 )(EditAtricleContainer)
