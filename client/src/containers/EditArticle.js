@@ -6,6 +6,7 @@ import { ArticleForm } from '../components'
 import {
  setPropTypes,
  withState,
+ flattenProp,
  withHandlers,
  lifecycle,
  compose
@@ -31,6 +32,7 @@ export default compose(
   }),
 
   withAuth,
+  flattenProp('auth'),
 
   withAuthCheck,
 
@@ -40,7 +42,7 @@ export default compose(
     editArticle: ({
       history: { push },
       match: { params: {id} },
-      auth: { getToken }
+      getToken
     }) => article => {
       fetch(`/articles/${id}`,{
         method: 'PATCH',
