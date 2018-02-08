@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Proptype from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import {

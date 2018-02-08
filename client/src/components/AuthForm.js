@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   setPropTypes,
-  withProps,
   withHandlers,
   compose,
   withState
