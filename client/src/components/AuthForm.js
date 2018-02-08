@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   setPropTypes,
+  withState,
   withHandlers,
-  compose,
-  withState
+  pure,
+  compose
 } from 'recompose'
 
 const AuthForm = ({
@@ -62,7 +63,9 @@ export default compose(
   setPropTypes({
     formName: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired
-  })
+  }),
+
+  pure
 )(AuthForm)
 
 
